@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .bg-mynav {
+      background-color: #2c3e50;
+    }
+
+    body {
+      font-size: 1.25rem;
+      background-color: #f6f8fa;
+    }
+
+    td {
+      line-height: 3rem;
+    }
+  </style>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+  <title>CRUD FROM API</title>
+
+</head>
+
+<body>
+
+  <nav class="navbar navbar-dark bg-mynav">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">My App</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="d-flex bd-highlight mb-3">
+      <div class="me-auto p-2 bd-highlight">
+        <h2>Users
+      </div>
+      <div class="p-2 bd-highlight">
+        <button type="button" class="btn btn-secondary" onclick="showUserCreateBox()">Create</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="table-responsive">
+
+
+        <form class="" action="/Pathrandom" method="post">
+
+          <label for=>Path_id:</label><br>
+          <input type="text" name="path_id" value="<%= Math.floor(Math.random()*99001)+1000 %>"><br>
+
+          <label for=>Path:</label><br>
+          <input type="text" name="Mypath"  value=" "><br>
+
+          <label for=>Rearch:</label><br>
+          <input type="text" name="Rearch" id="Rearch" value="<%= Math.floor(Math.random()*99001)+1000 %>"><br>
+
+
+          <label for=>Like:</label><br>
+          <input type="text" name="Liked" id="Liked" value="<%= Math.floor(Math.random()*100000)+1 %>"><br>
+
+          <label for=>Share:</label><br>
+          <input type="text" name="Share" id="Share" value="<%= Math.floor(Math.random()*100000)+1 %>"><br>
+
+          <label for=>Comment:</label><br>
+          <input type="text" name="comment" value="<%= Math.floor(Math.random()*100000)+1 %>"><br><br>
+
+          <input type="submit" class="btn btn-success btn-sm" name="button" id="btn" value="Add">
+          <a class="btn btn-warning btn-sm" href="/">Reset Data</a><br>
+
+        </form>
+      </div>
+
+
+
+      <tr>
+        <th scope="row" colspan="5"><br>
+          <h1>Path man</h1><h5>Mini Game ถ้าต้องการค่า Average ที่ถูกต้องกดปุ่ม BuBu ให้หายไปให้หมดก่อน :P </h5>
+        </th>
+      </tr>
+
+      <table class="table">
+
+        <thead>
+          <tr>
+            <th scope="col">Path</th>
+            <th scope="col">Reach</th>
+            <th scope="col">Liked</th>
+            <th scope="col">Share</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Engagement</th>
+            <th scope="col">Viral</th>
+          </tr>
+
+          <form method="get">
+            <% pathrandom.forEach(function(item) { %>
+              <tr>
+                <% if(item.Rearch > Math.max(item.Liked,item.Share,item.comment) ){ %>
+                <td>
+                  <%= item.Mypath %>
+                </td>
+                <td>
+                  <%= item.Rearch %>
+                </td>
+                <td>
+                  <%= item.Liked %>
+                </td>
+                <td>
+                  <%= item.Share %>
+                </td>
+                <td>
+                  <%= item.comment %>
+                </td>
+                <td>
+                  <%= Number(item.comment)+Number(item.Share)+ Number(item.Liked) %>
+                </td>
+                <td>
+                  <%= ((Number(item.comment)+Number(item.Share)+ Number(item.Liked))/Number(item.Rearch)).toFixed(2) %>
+                </td>
+                <td>
+                  <% if(((Number(item.comment)+Number(item.Share)+ Number(item.Liked))/Number(item.Rearch)).toFixed(2) >= 0.1){ %>
+                    <a class="btn btn-success delete">Viral</a>
+                    
+                    <a href="../delete/<%= item.path_id %>" class="btn btn-danger delete">Delete</a>
+
+                <% } else { %>
+                  <a class="btn btn-secondary delete">Viral</a>
+                   
+                  <a href="../delete/<%= item.path_id %>" class="btn btn-danger delete">Delete</a>
+                <% } %>
+                  
+                </td>
+                <% } else { %>
+                  <a href="../delete/<%= item.path_id %>" class="btn btn-danger delete">BuBu</a>
+                <% } %>
+              </tr>
+              <% }) %>
+          </form>
+        </thead>
+
+        <tbody id="mytable">
+          <tr>
+            <th scope="row" colspan="5">
+
+              <h4>Loading...</h4><br>
+
+              <a class="btn btn-secondary btn-sm" href="../delete">
+                <h3>Reset Data</h3>
+              </a><br><br>
+
+              <a href="../AvgLiked" class="btn btn-info">Avg Like</a>&ensp;
+              <a href="../AvgShare" class="btn btn-info">Avg Share</a>&ensp;
+              <a href="../Avgcomment" class="btn btn-info">Avg Comment</a>
+
+            </th>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="container">
+        <h1 class="mt-5">62050185 Nanthawat Minjindakul</h1>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script> -->
+
+</body>
+
+</html>
